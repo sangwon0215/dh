@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동해투어 - 강원도 동해시 공식 관광 플랫폼</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0055A5',
+                            sky: '#00A3E0',
+                            teal: '#009688',
+                            coral: '#FF6B6B',
+                            dark: '#0F172A',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-overlay {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+        }
+        .hero-title-shadow {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #94A3B8;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-brand-sky selection:text-white">
+
+    <!-- Header Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-blue to-brand-sky flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid me-0.5 fa-water text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900 block leading-none">동해투어 <span class="text-brand-sky font-normal text-sm">DONGHAE TOUR</span></span>
+                    <span class="text-[10px] text-slate-500 font-medium tracking-widest uppercase">Travel Donghae City</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                <a href="#attractions" class="hover:text-brand-blue transition-colors">5대 명소</a>
+                <a href="#courses" class="hover:text-brand-blue transition-colors">추천 코스</a>
+                <a href="#food" class="hover:text-brand-blue transition-colors">맛집 디렉토리</a>
+                <a href="#quiz" class="hover:text-brand-blue transition-colors flex items-center gap-1.5 text-brand-sky font-semibold">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 취향 맞춤 퀴즈
+                </a>
+            </nav>
+
+            <!-- Actions Header -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="scrollToQuiz()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky text-white text-sm font-medium shadow-md shadow-brand-sky/20 hover:shadow-lg hover:shadow-brand-sky/30 hover:-translate-y-0.5 transition-all">
+                    맞춤 여행 찾기
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-brand-blue p-2 focus:outline-none" aria-label="메뉴 열기">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3 shadow-xl">
+            <a href="#attractions" class="mobile-nav-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100">5대 핵심 명소</a>
+            <a href="#courses" class="mobile-nav-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100">추천 여행 코스</a>
+            <a href="#food" class="mobile-nav-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-slate-100">맛집 디렉토리</a>
+            <a href="#quiz" class="mobile-nav-link block px-3 py-2 rounded-lg text-brand-sky font-semibold hover:bg-slate-100">✨ 취향 맞춤 코스 퀴즈</a>
+            <button onclick="scrollToQuiz(); closeMobileMenu();" class="w-full mt-2 py-3 rounded-xl bg-brand-blue text-white font-medium shadow-md text-center">
+                나만의 동해 여행 만들기
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Hero Banner Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-slate-900">
+        <!-- Hero Background Image Slider Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img id="hero-bg" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80" alt="동해 바다 풍경" class="w-full h-full object-cover transition-all duration-1000 opacity-70 scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-slate-900/60"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center text-white py-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-brand-sky text-sm font-semibold mb-6 animate-bounce">
+                <i class="fa-solid fa-compass"></i> 강원도 동해시 공식 관광 가이드
+            </div>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight hero-title-shadow leading-tight sm:leading-none mb-6">
+                푸른 바다와 신비로운 계곡,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-sky via-teal-300 to-emerald-300">동해시의 숨은 매력</span>으로
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-200 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                일출 명소 촛대바위부터 활력 넘치는 도째비골, 힐링 무릉계곡까지.<br class="hidden sm:inline"> 당신만의 특별한 동해 여행을 지금 시작해 보세요.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#attractions" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky hover:opacity-95 text-white font-bold shadow-lg shadow-brand-blue/40 flex items-center justify-center gap-2 transition-transform active:scale-95">
+                    <i class="fa-solid fa-map-location-dot"></i> 5대 명소 구경하기
+                </a>
+                <a href="#quiz" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> 취향 맞춤 코스 찾기
+                </a>
+            </div>
+
+            <!-- Quick Stats Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-white/10 pt-8 text-slate-300">
+                <div class="p-3">
+                    <div class="text-2xl font-bold text-white mb-1">5대</div>
+                    <div class="text-xs text-slate-400">대표 핵심 관광명소</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-2xl font-bold text-white mb-1">365일</div>
+                    <div class="text-xs text-slate-400">사계절 청정 여행지</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-2xl font-bold text-white mb-1">4.9 ★</div>
+                    <div class="text-xs text-slate-400">여행자 만족도 평가</div>
+                </div>
+                <div class="p-3">
+                    <div class="text-2xl font-bold text-white mb-1">100%</div>
+                    <div class="text-xs text-slate-400">신선한 동해 곰치&회</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: 5대 핵심 관광명소 -->
+    <section id="attractions" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-sky font-bold uppercase tracking-widest text-xs">Top 5 Landmarks</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 mb-4">동해시 5대 핵심 관광명소</h2>
+                <p class="text-slate-600">동해시에 오면 반드시 방문해야 할 대표 시그니처 랜드마크 5곳을 소개합니다.</p>
+            </div>
+
+            <!-- Card Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="attractions-container">
+                <!-- Javascript dynamic render logic included for details modal -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: 추천 여행 코스 (테마별) -->
+    <section id="courses" class="py-24 bg-white border-y border-slate-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-brand-blue font-bold uppercase tracking-widest text-xs">Recommended Itineraries</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">추천 여행 코스</h2>
+                </div>
+                <p class="text-slate-600 mt-2 md:mt-0 max-w-md">일정 및 여행 스타일별로 최적화된 동해시 당일 / 1박 2일 일정을 둘러보세요.</p>
+            </div>
+
+            <!-- Course Filter Tabs -->
+            <div class="flex flex-wrap gap-2 mb-8 border-b border-slate-200 pb-4" id="course-tabs">
+                <button onclick="filterCourse('all')" class="tab-btn active-tab px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-brand-blue text-white shadow-sm">전체보기</button>
+                <button onclick="filterCourse('healing')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">🌿 힐링&자연</button>
+                <button onclick="filterCourse('activity')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">⚡ 액티비티&스릴</button>
+                <button onclick="filterCourse('retro')" class="tab-btn px-5 py-2.5 rounded-full text-sm font-semibold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">📸 감성&인생샷</button>
+            </div>
+
+            <!-- Course Timeline List Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" id="courses-container">
+                <!-- JS Inject -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: 맛집 디렉토리 -->
+    <section id="food" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-coral font-bold uppercase tracking-widest text-xs">Donghae Local Food</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 mb-4">동해시 맛집 & 카페 디렉토리</h2>
+                <p class="text-slate-600">동해 현지인이 추천하는 별미 음식과 뷰 맛집 카페를 만나보세요.</p>
+            </div>
+
+            <!-- Food Category Buttons & Search -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto" id="food-categories">
+                    <button onclick="filterFood('all')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-slate-900 text-white">전체</button>
+                    <button onclick="filterFood('seafood')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">🐟 싱싱 해산물</button>
+                    <button onclick="filterFood('soup')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">🍲 국물/곰치국</button>
+                    <button onclick="filterFood('cafe')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">☕ 오션뷰 카페</button>
+                </div>
+                <!-- Search bar -->
+                <div class="relative w-full sm:w-72">
+                    <input type="text" id="food-search" placeholder="맛집 이름 또는 메뉴 검색..." oninput="searchFood()" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-sky">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Food Cards Container -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="food-container">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: 취향 맞춤 여행 코스 퀴즈 -->
+    <section id="quiz" class="py-24 bg-gradient-to-br from-slate-900 via-brand-dark to-slate-900 text-white relative overflow-hidden">
+        <!-- Decoration background elements -->
+        <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-sky/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-brand-blue/20 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-3xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="px-4 py-1.5 rounded-full bg-brand-sky/20 text-brand-sky font-semibold text-xs border border-brand-sky/30 uppercase tracking-widest inline-block mb-3">AI Travel Match Quiz</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">나만의 맞춤 동해 여행 코스 퀴즈</h2>
+                <p class="text-slate-300 text-sm sm:text-base font-light">3가지 질문에 답하고 나에게 꼭 맞는 동해 여행 일정을 추천받으세요!</p>
+            </div>
+
+            <!-- Quiz Box Component -->
+            <div class="bg-white/10 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl" id="quiz-card">
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between text-xs text-slate-400 font-medium mb-2">
+                        <span>진행률</span>
+                        <span id="quiz-step-text">1 / 3 단계</span>
+                    </div>
+                    <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div id="quiz-progress" class="h-full bg-gradient-to-r from-brand-sky to-teal-400 w-1/3 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Quiz Content Container -->
+                <div id="quiz-body">
+                    <!-- Dynamic Question Area -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Travel Map & Info Section -->
+    <section class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-brand-blue to-brand-sky rounded-3xl p-8 sm:p-12 text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 max-w-2xl">
+                    <div class="inline-block px-3 py-1 bg-white/20 rounded-md text-xs font-semibold">여행 꿀팁 & 안내</div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold">동해시 여행 관광안내소 & 셔틀 정보</h3>
+                    <p class="text-white/80 font-light text-sm sm:text-base leading-relaxed">
+                        KTX 동해역/묵호역에서 주요 관광지까지 시내버스 및 관광 택시로 편리하게 이동할 수 있습니다. 
+                        더 자세한 안내 책자 및 지도 다운로드가 필요하신가요?
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <div class="flex items-center gap-2 text-sm bg-white/10 px-4 py-2 rounded-xl">
+                            <i class="fa-solid fa-phone text-amber-300"></i> 동해시 관광안내: 033-530-2234
+                        </div>
+                        <div class="flex items-center gap-2 text-sm bg-white/10 px-4 py-2 rounded-xl">
+                            <i class="fa-solid fa-train text-amber-300"></i> KTX 묵호역/동해역 직통
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-shrink-0">
+                    <button onclick="openGuideModal()" class="px-8 py-4 bg-white text-brand-blue hover:bg-slate-100 font-bold rounded-2xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
+                        <i class="fa-solid fa-file-pdf text-xl"></i> 관광 가이드북 안내
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="space-y-4 md:col-span-2">
+                    <div class="flex items-center gap-2 text-white font-bold text-lg">
+                        <div class="w-8 h-8 rounded-lg bg-brand-sky flex items-center justify-center text-white text-xs">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        동해투어 (Donghae Tour)
+                    </div>
+                    <p class="text-slate-400 font-light max-w-md text-xs sm:text-sm leading-relaxed">
+                        본 사이트는 강원도 동해시의 5대 핵심 명소, 맛집, 여행 코스를 한눈에 안내하는 웹 플랫폼입니다. 동해의 맑은 바다와 아름다운 자연에서 잊지 못할 추억을 만들어보세요.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm">주요 관광지</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#attractions" class="hover:text-white transition-colors">추암 촛대바위</a></li>
+                        <li><a href="#attractions" class="hover:text-white transition-colors">무릉계곡 & 베틀바위</a></li>
+                        <li><a href="#attractions" class="hover:text-white transition-colors">망상해수욕장</a></li>
+                        <li><a href="#attractions" class="hover:text-white transition-colors">논골담길 벽화마을</a></li>
+                        <li><a href="#attractions" class="hover:text-white transition-colors">도째비골 스카이밸리</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm">관광 문의</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><i class="fa-solid fa-location-dot me-1"></i> 강원특별자치도 동해시 천곡로 77</li>
+                        <li><i class="fa-solid fa-phone me-1"></i> 관광종합안내: 033-530-2234</li>
+                        <li><i class="fa-solid fa-clock me-1"></i> 연중무휴 09:00 - 18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 동해투어 관광 플랫폼 프로젝트 (Donghae Tour). All rights reserved.</p>
+                <div class="flex gap-4 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-slate-400">개인정보처리방침</a>
+                    <a href="#" class="hover:text-slate-400">이용약관</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Attraction Modal Dynamic Element -->
+    <div id="attraction-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col">
+            <button onclick="closeAttractionModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-900/50 text-white flex items-center justify-center hover:bg-slate-900 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modal-content" class="overflow-y-auto custom-scrollbar">
+                <!-- Content via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Toast Message -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300 transform translate-y-4">
+        <i class="fa-solid fa-circle-check text-brand-sky text-lg"></i>
+        <span id="toast-msg" class="text-sm font-medium">안내 메시지</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Data Store: 5대 핵심 관광명소
+        const attractionsData = [
+            {
+                id: 'chuam',
+                name: '추암 촛대바위',
+                category: '일출 / 자연경관',
+                tag: '#일출명소 #애국가첫장면 #출렁다리',
+                image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+                desc: '동해 바다의 기암괴석이 빚어낸 웅장한 전설! 애국가 첫 방송의 첫 배경으로 잘 알려진 동해시 대표 일출 명소입니다.',
+                detail: '추암 촛대바위는 바다에서 솟아오른 듯한 형상의 거대 암석으로, 해돋이 순간 촛불이 켜진 듯한 장관을 연출합니다. 주변에는 추암 출렁다리, 석림, 해암정 등 걸으며 감상할 수 있는 아름다운 수변 산책로가 조성되어 있습니다.',
+                address: '강원특별자치도 동해시 촛대바위길 28',
+                hours: '24시간 오픈 (출렁다리 09:00 - 18:00)',
+                fee: '무료 입장'
+            },
+            {
+                id: 'mureung',
+                name: '무릉계곡',
+                category: '계곡 / 산림욕',
+                tag: '#무릉반석 #베틀바위 #쌍폭포 #힐링 산책',
+                image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                desc: '신선이 노닐었다는 전설이 내려오는 신비스로운 계곡. 한국의 무릉도원이라 불리는 청정 자연휴양지입니다.',
+                detail: '수많은 시인 묵객들의 글귀가 새겨진 널찍한 무릉반석과 장엄한 용추폭포, 쌍폭포를 만날 수 있습니다. 최근 개방된 베틀바위 산성길은 "한국의 장가계"라 불릴 만큼 압도적인 절경을 자랑합니다.',
+                address: '강원특별자치도 동해시 삼화로 538',
+                hours: '08:00 - 17:30 (시즌별 변동)',
+                fee: '성인 2,000원 / 청소년 1,500원'
+            },
+            {
+                id: 'mangsang',
+                name: '망상해수욕장',
+                category: '해변 / 오토캠핑',
+                tag: '#은빛백사장 #오토캠핑장 #서핑 #해수욕',
+                image: 'https://images.unsplash.com/photo-1509233725247-49e657c54213?auto=format&fit=crop&w=800&q=80',
+                desc: '울창한 송림과 수심이 얕고 맑은 은빛 백사장이 넓게 펼쳐진 동해안 최대 규모의 청정 해수욕장입니다.',
+                detail: '울창한 소나무 숲과 얕은 수심 덕분에 가족 단위 피서객에게 인기가 높습니다. 대한민국 1호 오토캠핑 리조트 시설이 잘 조성되어 있어 감성 캠핑과 야영을 즐기기에 최적입니다.',
+                address: '강원특별자치도 동해시 망상동 393-16',
+                hours: '연중무휴 (해수욕장 개장 7~8월)',
+                fee: '무료 (캠핑장 이용료 별도)'
+            },
+            {
+                id: 'nongoldam',
+                name: '논골담길 (묵호등대)',
+                category: '감성 마을 / 벽화',
+                tag: '#묵호등대 #어촌삶의이야기 #드라마촬영지 #카페',
+                image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80',
+                desc: '묵호항 어민들의 삶과 이야기가 정겨운 벽화로 그려진 감성 언덕 마을과 시원한 바다가 조망되는 묵호등대.',
+                detail: '논골1길부터 3길까지 옛 어촌 마을 골목길마다 삶의 애환과 스토리가 담긴 그림들이 반겨줍니다. 정상에 위치한 묵호등대에서는 탁 트인 동해 바다 전망과 감성 카페들을 만날 수 있습니다.',
+                address: '강원특별자치도 동해시 논골1길 2',
+                hours: '24시간 (등대 전망대 09:00 - 18:00)',
+                fee: '무료'
+            },
+            {
+                id: 'dojjaebi',
+                name: '도째비골 스카이밸리',
+                category: '액티비티 / 자이언트슬라이드',
+                tag: '#스카이워크 #자이언트슬라이드 #스카이사이클 #해랑전망대',
+                image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80',
+                desc: '동해 바다 위를 걷는 스카이워크와 아찔한 익스트림 레포츠 체험을 함께 즐길 수 있는 신개념 관광지!',
+                detail: '높이 59m의 스카이워크 전망대에서 도깨비방망이 모양의 해랑전망대와 바다를 관람할 수 있습니다. 굴곡진 대형 미끄럼틀인 자이언트 슬라이드와 하늘 위 외줄타기 자전거(스카이사이클) 체험이 인기를 끌고 있습니다.',
+                address: '강원특별자치도 동해시 묵호진동 2-109',
+                hours: '10:00 - 17:00 (매주 월요일 휴무)',
+                fee: '입장료 성인 2,000원 (체험시설 별도)'
+            }
+        ];
+
+        // Data Store: 여행 코스
+        const coursesData = [
+            {
+                id: 1,
+                title: '동해 1일 힐링&감성 스팟 코스',
+                type: 'healing',
+                duration: '당일 코스',
+                desc: '동해의 시원한 일출부터 고즈넉한 벽화 마을 산책, 바다 뷰 카페까지 하루 만에 알차게 둘러보는 인기 코스',
+                steps: [
+                    { time: '06:00', place: '추암 촛대바위', text: '일출 감상 & 출렁다리 산책', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80' },
+                    { time: '09:30', place: '논골담길 & 묵호등대', text: '골목길 벽화 감상 및 감성 스냅 촬영', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80' },
+                    { time: '12:00', place: '묵호항 어시장', text: '신선한 해산물/곰치국으로 점심 식사', image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80' },
+                    { time: '14:00', place: '도째비골 스카이밸리', text: '스카이워크 & 해랑전망대 탐방', image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=600&q=80' },
+                    { time: '16:30', place: '망상해수욕장 카페거리', text: '오션뷰 카페 휴식 및 여유로운 바다 산책', image: 'https://images.unsplash.com/photo-1509233725247-49e657c54213?auto=format&fit=crop&w=600&q=80' }
+                ]
+            },
+            {
+                id: 2,
+                title: '액티비티 & 액션 스릴 1박 2일 코스',
+                type: 'activity',
+                duration: '1박 2일 코스',
+                desc: '자이언트 슬라이드, 스카이 사이클부터 베틀바위 등산까지 익스트림한 도전을 즐기는 여행자 전용',
+                steps: [
+                    { time: '1일차 10:00', place: '도째비골 스카이밸리', text: '스카이사이클 & 자이언트 슬라이드 탑승', image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=600&q=80' },
+                    { time: '1일차 13:00', place: '망상 해변 서핑', text: '동해 파도를 즐기는 낭만 서핑 레슨', image: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80' },
+                    { time: '2일차 09:00', place: '무릉계곡 베틀바위', text: '한국의 장가계라 불리는 비경 등산', image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80' },
+                    { time: '2일차 14:00', place: '천곡황금벌목 동굴', text: '도심 속 신비로운 쾌적 동굴 탐험', image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80' }
+                ]
+            },
+            {
+                id: 3,
+                title: '자연 휴양 & 힐링 1박 2일 코스',
+                type: 'retro',
+                duration: '1박 2일 코스',
+                desc: '숲속 계곡의 맑은 공기와 해변 캠핑의 감성을 제대로 느낄 수 있는 정통 힐링 휴가지 코스',
+                steps: [
+                    { time: '1일차 11:00', place: '무릉계곡 & 무릉반석', text: '맑은 계곡물에 발 담그기 & 숲 산책', image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80' },
+                    { time: '1일차 16:00', place: '망상 오토캠핑리조트', text: '송림 속 바비큐 party & 숙박', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80' },
+                    { time: '2일차 06:30', place: '추암 촛대바위', text: '새해 느낌 물씬 풍기는 아침 일출', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80' },
+                    { time: '2일차 11:00', place: '한섬감성길', text: '해안 산책로 걷기 & 동해 곰치국 맛집', image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80' }
+                ]
+            }
+        ];
+
+        // Data Store: 맛집 디렉토리
+        const foodData = [
+            {
+                name: '진가네회포차',
+                category: 'seafood',
+                categoryText: '🐟 싱싱 해산물',
+                rating: 4.9,
+                image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80',
+                desc: '묵호항 부근 위치! 신선함이 남다른 자연산 모둠회와 얼큰한 매운탕이 일품인 대표 포차.',
+                tag: '#묵호맛집 #진가네회포차 #모둠회 #해물파전',
+                price: '35,000원대~'
+            },
+            {
+                name: '동해 칠보곰치국',
+                category: 'soup',
+                categoryText: '🍲 국물/곰치국',
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80',
+                desc: '동해 현지인들이 적극 추천하는 얼큰하고 시원한 곰치국 전문점입니다.',
+                tag: '#묵호항맛집 #곰치국 #해장전문',
+                price: '18,000원대'
+            },
+            {
+                name: '묵호 어시장 횟집 타운',
+                category: 'seafood',
+                categoryText: '🐟 싱싱 해산물',
+                rating: 4.9,
+                image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80',
+                desc: '갓 잡아 올린 싱싱한 제철 횟감과 대게를 가성비 좋게 맛볼 수 있습니다.',
+                tag: '#자연산회 #대게 #싱싱어시장',
+                price: '변동 (시가)'
+            },
+            {
+                name: '논골 카페 & 묵호 뷰',
+                category: 'cafe',
+                categoryText: '☕ 오션뷰 카페',
+                rating: 4.7,
+                image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80',
+                desc: '언덕 위 묵호 바다 전망을 보며 시그니처 감성 라떼를 즐기는 힐링 공간.',
+                tag: '#논골담길 #파노라마뷰 #인생샷',
+                price: '6,000원대'
+            },
+            {
+                name: '망상 오션갤러리 카페',
+                category: 'cafe',
+                categoryText: '☕ 오션뷰 카페',
+                rating: 4.6,
+                image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80',
+                desc: '망상 해변 바로 앞에 위치하여 바도 소리와 수제 베이커리를 즐기는 브런치 카페.',
+                tag: '#망상해변 #수제베이커리 #디저트',
+                price: '7,000원대'
+            },
+            {
+                name: '추암 촛대바위 생선구이집',
+                category: 'seafood',
+                categoryText: '🐟 싱싱 해산물',
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80',
+                desc: '숯불 향이 가득 입혀진 짭조름한 듬뿍 생선구이 모듬 한 상 차림.',
+                tag: '#추암맛집 #생선구이정식 #가족식사',
+                price: '15,000원대'
+            },
+            {
+                name: '무릉 산채비빔밥 식당가',
+                category: 'soup',
+                categoryText: '🍲 힐링/한식',
+                rating: 4.7,
+                image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80',
+                desc: '무릉계곡 입구에서 맛보는 청정 산나물과 감자전, 시원한 막걸리 한잔!',
+                tag: '#무릉계곡 #산채비빔밥 #감자전',
+                price: '12,000원대'
+            }
+        ];
+
+        // Dynamic Render: 5대 핵심 관광명소
+        function renderAttractions() {
+            const container = document.getElementById('attractions-container');
+            container.innerHTML = attractionsData.map(item => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full font-medium">${item.category}</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs font-semibold text-brand-sky block mb-1">${item.tag}</span>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-2">${item.name}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed line-clamp-2">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <button onclick="openAttractionModal('${item.id}')" class="w-full py-3 rounded-xl bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-sm font-semibold transition-all flex items-center justify-center gap-2">
+                            <span>자세히 보기</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Dynamic Render: 여행 코스
+        function renderCourses(filter = 'all') {
+            const container = document.getElementById('courses-container');
+            const filtered = filter === 'all' ? coursesData : coursesData.filter(c => c.type === filter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center py-12 text-slate-500">선택한 테마의 추천 코스가 준비 중입니다.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(course => `
+                <div class="bg-slate-50 border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between hover:border-brand-sky/50 transition-all shadow-sm hover:shadow-md">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-bold">${course.duration}</span>
+                            <i class="fa-solid fa-route text-slate-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">${course.title}</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm mb-6 leading-relaxed">${course.desc}</p>
+                        
+                        <!-- Timeline with Images -->
+                        <div class="relative pl-6 space-y-6 border-l-2 border-brand-sky/30 my-6">
+                            ${course.steps.map(s => `
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1 w-3 h-3 rounded-full bg-brand-sky border-2 border-white group-hover:scale-125 transition-transform"></div>
+                                    <div class="text-xs text-brand-blue font-bold mb-0.5">${s.time}</div>
+                                    <div class="text-sm font-semibold text-slate-800 mb-1">${s.place}</div>
+                                    <div class="text-xs text-slate-500 font-light mb-2.5">${s.text}</div>
+                                    <div class="w-full h-28 sm:h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                                        <img src="${s.image}" alt="${s.place}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <button onclick="showToast('${course.title} 일정이 내 여행 리스트에 저장되었습니다!')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-900 hover:text-white text-sm font-semibold transition-all shadow-xs">
+                        이 코스 선택하기
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Filter Course Tab Event
+        function filterCourse(type) {
+            document.querySelectorAll('#course-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-blue', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-600');
+            event.target.classList.add('bg-brand-blue', 'text-white', 'shadow-sm');
+            renderCourses(type);
+        }
+
+        // Dynamic Render: 맛집 디렉토리
+        let currentFoodCategory = 'all';
+        function renderFood() {
+            const container = document.getElementById('food-container');
+            const searchVal = document.getElementById('food-search').value.toLowerCase();
+
+            const filtered = foodData.filter(item => {
+                const matchCategory = currentFoodCategory === 'all' || item.category === currentFoodCategory;
+                const matchSearch = item.name.toLowerCase().includes(searchVal) || item.tag.toLowerCase().includes(searchVal);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">검색 조건에 맞는 맛집이 없습니다.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-500 flex items-center gap-1">
+                            <i class="fa-solid fa-star text-xs"></i> ${item.rating}
+                        </span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-[11px] font-medium text-slate-400 mb-1">${item.categoryText}</div>
+                        <h4 class="text-base font-bold text-slate-900 mb-1">${item.name}</h4>
+                        <p class="text-xs text-slate-500 mb-3 line-clamp-2">${item.desc}</p>
+                        <div class="text-xs font-medium text-brand-sky mb-3">${item.tag}</div>
+                        <div class="flex items-center justify-between border-t border-slate-100 pt-3">
+                            <span class="text-xs text-slate-400">대표가격</span>
+                            <span class="text-xs font-bold text-slate-800">${item.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterFood(category) {
+            currentFoodCategory = category;
+            document.querySelectorAll('.food-cat-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-900', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            });
+            event.target.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            event.target.classList.add('bg-slate-900', 'text-white');
+            renderFood();
+        }
+
+        function searchFood() {
+            renderFood();
+        }
+
+        // SECTION 4: Quiz System Logic
+        const quizQuestions = [
+            {
+                q: "이번 동해 여행에서 가장 기대하는 모습은 무엇인가요?",
+                options: [
+                    { label: "🌊 파도 소리와 은빛 백사장에서의 여유로운 힐링", type: "nature" },
+                    { label: "⚡ 아찔한 익스트림 슬라이드와 액티비티 레포츠", type: "activity" },
+                    { label: "📸 아기자기한 감성 골목 벽화와 인생샷 스팟 탐방", type: "photo" }
+                ]
+            },
+            {
+                q: "누구와 함께 동해로 여행을 떠나시나요?",
+                options: [
+                    { label: "💑 연인 또는 소중한 친구와 단둘이", type: "photo" },
+                    { label: "👨‍👩‍👧‍👦 웃음꽃 가득한 가족 / 부모님 모시고", type: "nature" },
+                    { label: "🚴 혼자서 떠나는 자유로운 힐링 여행", type: "activity" }
+                ]
+            },
+            {
+                q: "동해시에서 꼭 먹어보고 싶은 별미는?",
+                options: [
+                    { label: "🍲 현지인 추천 얼큰 시원한 곰치국과 산채정식", type: "nature" },
+                    { label: "🐟 갓 잡은 신선한 회와 묵호항 해산물", type: "activity" },
+                    { label: "☕ 오션뷰가 펼쳐진 감성 카페 디저트", type: "photo" }
+                ]
+            }
+        ];
+
+        let quizStep = 0;
+        let quizAnswers = [];
+
+        function renderQuizStep() {
+            const quizBody = document.getElementById('quiz-body');
+            const quizProgress = document.getElementById('quiz-progress');
+            const quizStepText = document.getElementById('quiz-step-text');
+
+            if (quizStep < quizQuestions.length) {
+                // Update Progress Bar
+                const percent = ((quizStep + 1) / quizQuestions.length) * 100;
+                quizProgress.style.width = `${percent}%`;
+                quizStepText.innerText = `${quizStep + 1} / ${quizQuestions.length} 단계`;
+
+                const currentQ = quizQuestions[quizStep];
+
+                quizBody.innerHTML = `
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-6 leading-snug">${currentQ.q}</h3>
+                    <div class="space-y-3">
+                        ${currentQ.options.map((opt, idx) => `
+                            <button onclick="answerQuiz('${opt.type}')" class="w-full text-left p-4 sm:p-5 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-brand-sky text-white text-sm sm:text-base font-medium transition-all flex items-center justify-between group">
+                                <span>${opt.label}</span>
+                                <i class="fa-solid fa-chevron-right text-xs opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // Quiz Finish -> Render Recommended Plan
+                showQuizResult();
+            }
+        }
+
+        function answerQuiz(type) {
+            quizAnswers.push(type);
+            quizStep++;
+            renderQuizStep();
+        }
+
+        function showQuizResult() {
+            const quizBody = document.getElementById('quiz-body');
+            const quizProgress = document.getElementById('quiz-progress');
+            const quizStepText = document.getElementById('quiz-step-text');
+
+            quizProgress.style.width = `100%`;
+            quizStepText.innerText = `분석 완료!`;
+
+            // Simple Logic for Quiz Match Result
+            const counts = { nature: 0, activity: 0, photo: 0 };
+            quizAnswers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+            let resultType = 'nature';
+            if (counts.activity > counts.nature && counts.activity >= counts.photo) resultType = 'activity';
+            if (counts.photo > counts.nature && counts.photo > counts.activity) resultType = 'photo';
+
+            let resultData = {
+                title: "🌿 청정 자연 힐링 코스",
+                spots: "추암 촛대바위 → 무릉계곡 → 무릉반석 산책",
+                food: "무릉 산채비빔밥 & 곰치국",
+                desc: "지친 일상에서 벗어나 동해의 맑은 계곡과 바다에서 조용한 힐링을 선사하는 완벽한 동해 코스입니다."
+            };
+
+            if (resultType === 'activity') {
+                resultData = {
+                    title: "⚡ 익스트림 액티비티 코스",
+                    spots: "도째비골 스카이밸리 → 해랑전망대 → 망상 서핑",
+                    food: "묵호 어시장 싱싱 회타운",
+                    desc: "동해의 짜릿한 자이언트 슬라이드와 바다 위 스카이워크로 스트레스를 날려버릴 활력 코스입니다."
+                };
+            } else if (resultType === 'photo') {
+                resultData = {
+                    title: "📸 감성 만점 인생샷 코스",
+                    spots: "논골담길 벽화마을 → 묵호등대 → 망상 해변 카페거리",
+                    food: "논골 뷰 카페 라떼 & 해산물 요리",
+                    desc: "어딜 찍어도 화보! 감성적인 바다 전경과 벽화 마을 골목길에서 인생샷을 가득 남기는 맞춤 코스입니다."
+                };
+            }
+
+            quizBody.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-sky/20 text-brand-sky text-2xl mb-4">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <span class="block text-xs uppercase tracking-widest text-brand-sky font-bold mb-1">Your Perfect Trip</span>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">${resultData.title}</h3>
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">${resultData.desc}</p>
+                    
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-left space-y-3 mb-8">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-location-dot text-brand-sky"></i>
+                            <span class="text-xs text-slate-400">추천 경로:</span>
+                            <span class="text-sm font-semibold text-white">${resultData.spots}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-utensils text-brand-coral"></i>
+                            <span class="text-xs text-slate-400">추천 먹거리:</span>
+                            <span class="text-sm font-semibold text-white">${resultData.food}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="resetQuiz()" class="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-all">
+                            퀴즈 다시 하기
+                        </button>
+                        <button onclick="showToast('${resultData.title} 코스가 저장되었습니다!')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-bold text-sm shadow-lg transition-all">
+                            내 일정으로 저장
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            quizStep = 0;
+            quizAnswers = [];
+            renderQuizStep();
+        }
+
+        function scrollToQuiz() {
+            document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Modal Functions for Attractions
+        function openAttractionModal(id) {
+            const item = attractionsData.find(a => a.id === id);
+            if (!item) return;
+
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <div class="relative h-64 sm:h-80">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent flex items-end p-6 sm:p-8">
+                        <div>
+                            <span class="text-brand-sky font-semibold text-xs mb-1 block">${item.tag}</span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white">${item.name}</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 sm:p-8 space-y-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">상세 소개</h4>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed">${item.detail}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-slate-100 pt-6 text-xs sm:text-sm">
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <i class="fa-solid fa-map-pin text-brand-blue mb-2 text-base"></i>
+                            <div class="text-slate-400 font-medium">위치 주소</div>
+                            <div class="text-slate-800 font-bold mt-1">${item.address}</div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <i class="fa-solid fa-clock text-brand-sky mb-2 text-base"></i>
+                            <div class="text-slate-400 font-medium">운영 시간</div>
+                            <div class="text-slate-800 font-bold mt-1">${item.hours}</div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <i class="fa-solid fa-ticket text-brand-teal mb-2 text-base"></i>
+                            <div class="text-slate-400 font-medium">입장 요금</div>
+                            <div class="text-slate-800 font-bold mt-1">${item.fee}</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="closeAttractionModal(); showToast('${item.name} 안내 정보가 복사되었습니다.')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-brand-blue transition-colors">
+                            여행 일정에 추가하기
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('attraction-modal').classList.remove('hidden');
+        }
+
+        function closeAttractionModal() {
+            document.getElementById('attraction-modal').classList.add('hidden');
+        }
+
+        function openGuideModal() {
+            showToast('동해시 관광 가이드북(PDF) 다운로드가 시작됩니다.');
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = msg;
+            toast.classList.remove('hidden', 'translate-y-4');
+            toast.classList.add('translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Initialize App
+        window.onload = function() {
+            renderAttractions();
+            renderCourses();
+            renderFood();
+            renderQuizStep();
+        };
+    </script>
+</body>
+</html>
