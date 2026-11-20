@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -161,7 +161,7 @@
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-brand-sky font-bold uppercase tracking-widest text-xs">Top 6 Landmarks</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 mb-4">동해시 6대 핵심 관광명소</h2>
-                <p class="text-slate-600">동해시에 오면 반드시 방문해야 할 대표 시그니처 랜드마크 6곳을 소개합니다.</p>
+                <p class="text-slate-600">사진을 클릭하면 공식 홈페이지(상세 안내)로 바로 연결됩니다.</p>
             </div>
 
             <!-- Card Grid -->
@@ -203,7 +203,7 @@
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-brand-coral font-bold uppercase tracking-widest text-xs">Donghae Local Food</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 mb-4">동해시 맛집 & 카페 디렉토리</h2>
-                <p class="text-slate-600">동해 현지인이 추천하는 별미 음식과 뷰 맛집 카페를 만나보세요.</p>
+                <p class="text-slate-600">사진을 클릭하면 각 맛집의 지도 및 상세 페이지로 연결됩니다.</p>
             </div>
 
             <!-- Food Category Buttons & Search -->
@@ -211,6 +211,7 @@
                 <div class="flex flex-wrap gap-2 w-full sm:w-auto" id="food-categories">
                     <button onclick="filterFood('all')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-slate-900 text-white">전체</button>
                     <button onclick="filterFood('seafood')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">🐟 싱싱 해산물</button>
+                    <button onclick="filterFood('izakaya')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">🍶 이자카야</button>
                     <button onclick="filterFood('soup')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">🍲 국물/곰치국</button>
                     <button onclick="filterFood('cafe')" class="food-cat-btn px-4 py-2 rounded-xl text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">☕ 오션뷰 카페</button>
                 </div>
@@ -283,9 +284,9 @@
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <button onclick="openGuideModal()" class="px-8 py-4 bg-white text-brand-blue hover:bg-slate-100 font-bold rounded-2xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
-                        <i class="fa-solid fa-file-pdf text-xl"></i> 관광 가이드북 안내
-                    </button>
+                    <a href="https://www.dh.go.kr/tour/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-white text-brand-blue hover:bg-slate-100 font-bold rounded-2xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xl"></i> 동해관광 공식 포털 바로가기
+                    </a>
                 </div>
             </div>
         </div>
@@ -356,7 +357,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Data Store: 6대 핵심 관광명소
+        // Data Store: 6대 핵심 관광명소 (각 명소 공식 홈페이지 URL 포함)
         const attractionsData = [
             {
                 id: 'chuam',
@@ -364,6 +365,7 @@
                 category: '일출 / 자연경관',
                 tag: '#일출명소 #애국가첫장면 #출렁다리',
                 image: 'images/chuam.jpg',
+                url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603365',
                 desc: '동해 바다의 기암괴석이 빚어낸 웅장한 전설! 애국가 첫 방송의 첫 배경으로 잘 알려진 동해시 대표 일출 명소입니다.',
                 detail: '추암 촛대바위는 바다에서 솟아오른 듯한 형상의 거대 암석으로, 해돋이 순간 촛불이 켜진 듯한 장관을 연출합니다. 주변에는 추암 출렁다리, 석림, 해암정 등 걸으며 감상할 수 있는 아름다운 수변 산책로가 조성되어 있습니다.',
                 address: '강원특별자치도 동해시 촛대바위길 28',
@@ -376,6 +378,7 @@
                 category: '계곡 / 산림욕',
                 tag: '#무릉반석 #베틀바위 #쌍폭포 #힐링 산책',
                 image: 'images/mureung.jpg',
+                url: 'https://www.dh.go.kr/mureung/',
                 desc: '신선이 노닐었다는 전설이 내려오는 신비스로운 계곡. 한국의 무릉도원이라 불리는 청정 자연휴양지입니다.',
                 detail: '수많은 시인 묵객들의 글귀가 새겨진 널찍한 무릉반석과 장엄한 용추폭포, 쌍폭포를 만날 수 있습니다. 최근 개방된 베틀바위 산성길은 "한국의 장가계"라 불릴 만큼 압도적인 절경을 자랑합니다.',
                 address: '강원특별자치도 동해시 삼화로 538',
@@ -388,6 +391,7 @@
                 category: '해변 / 오토캠핑',
                 tag: '#은빛백사장 #오토캠핑장 #서핑 #해수욕',
                 image: 'images/mangsang.jpg',
+                url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603399',
                 desc: '울창한 송림과 수심이 얕고 맑은 은빛 백사장이 넓게 펼쳐진 동해안 최대 규모의 청정 해수욕장입니다.',
                 detail: '울창한 소나무 숲과 얕은 수심 덕분에 가족 단위 피서객에게 인기가 높습니다. 대한민국 1호 오토캠핑 리조트 시설이 잘 조성되어 있어 감성 캠핑과 야영을 즐기기에 최적입니다.',
                 address: '강원특별자치도 동해시 망상동 393-16',
@@ -400,6 +404,7 @@
                 category: '감성 마을 / 벽화',
                 tag: '#묵호등대 #어촌삶의이야기 #드라마촬영지 #카페',
                 image: 'images/nongoldam.jpg',
+                url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603457',
                 desc: '묵호항 어민들의 삶과 이야기가 정겨운 벽화로 그려진 감성 언덕 마을과 시원한 바다가 조망되는 묵호등대.',
                 detail: '논골1길부터 3길까지 옛 어촌 마을 골목길마다 삶의 애환과 스토리가 담긴 그림들이 반겨줍니다. 정상에 위치한 묵호등대에서는 탁 트인 동해 바다 전망과 감성 카페들을 만날 수 있습니다.',
                 address: '강원특별자치도 동해시 논골1길 2',
@@ -412,6 +417,7 @@
                 category: '액티비티 / 자이언트슬라이드',
                 tag: '#스카이워크 #자이언트슬라이드 #스카이사이클 #해랑전망대',
                 image: 'images/dojjaebi.jpg',
+                url: 'https://www.dh.go.kr/dozzaebi/',
                 desc: '동해 바다 위를 걷는 스카이워크와 아찔한 익스트림 레포츠 체험을 함께 즐길 수 있는 신개념 관광지!',
                 detail: '높이 59m의 스카이워크 전망대에서 도깨비방망이 모양의 해랑전망대와 바다를 관람할 수 있습니다. 굴곡진 대형 미끄럼틀인 자이언트 슬라이드와 하늘 위 외줄타기 자전거(스카이사이클) 체험이 인기를 끌고 있습니다.',
                 address: '강원특별자치도 동해시 묵호진동 2-109',
@@ -424,6 +430,7 @@
                 category: '동굴 / 자연학습',
                 tag: '#도심속석회동굴 #종유석 #황금박쥐 #자연학습',
                 image: 'images/cheongok.jpg',
+                url: 'https://www.dh.go.kr/cave/',
                 desc: '전국에서 유일하게 도심 한가운데 위치한 천연 석회동굴! 수억 년의 신비를 간직한 종유석과 석순을 만나볼 수 있습니다.',
                 detail: '총 길이 1,510m의 천연 석회동굴로, 동굴 내부에 다양한 종유석, 석순, 석주, 동굴산호 등 희귀한 동굴 생성물이 잘 보존되어 있습니다. 관람 동선이 정비되어 있어 남녀노소 누구나 쾌적하게 신비로운 지하 세계를 탐험할 수 있습니다.',
                 address: '강원특별자치도 동해시 동굴로 50',
@@ -432,7 +439,7 @@
             }
         ];
 
-        // Data Store: 여행 코스
+        // Data Store: 여행 코스 (각 스텝 이미지 클릭 시 연결될 URL 포함)
         const coursesData = [
             {
                 id: 1,
@@ -441,11 +448,11 @@
                 duration: '당일 코스',
                 desc: '동해의 시원한 일출부터 고즈넉한 벽화 마을 산책, 바다 뷰 카페까지 하루 만에 알차게 둘러보는 인기 코스',
                 steps: [
-                    { time: '06:00', place: '추암 촛대바위', text: '일출 감상 & 출렁다리 산책', image: 'images/chuam.jpg' },
-                    { time: '09:30', place: '논골담길 & 묵호등대', text: '골목길 벽화 감상 및 감성 스냅 촬영', image: 'images/nongoldam.jpg' },
-                    { time: '12:00', place: '묵호항 어시장', text: '신선한 해산물/곰치국으로 점심 식사', image: 'images/seafood.jpg' },
-                    { time: '14:00', place: '도째비골 스카이밸리', text: '스카이워크 & 해랑전망대 탐방', image: 'images/dojjaebi.jpg' },
-                    { time: '16:30', place: '망상해수욕장 카페거리', text: '오션뷰 카페 휴식 및 여유로운 바다 산책', image: 'images/mangsang.jpg' }
+                    { time: '06:00', place: '추암 촛대바위', text: '일출 감상 & 출렁다리 산책', image: 'images/chuam.jpg', url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603365' },
+                    { time: '09:30', place: '논골담길 & 묵호등대', text: '골목길 벽화 감상 및 감성 스냅 촬영', image: 'images/nongoldam.jpg', url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603457' },
+                    { time: '12:00', place: '묵호항 어시장', text: '신선한 해산물/곰치국으로 점심 식사', image: 'images/seafood.jpg', url: 'https://map.naver.com/p/search/동해%20묵호항' },
+                    { time: '14:00', place: '도째비골 스카이밸리', text: '스카이워크 & 해랑전망대 탐방', image: 'images/dojjaebi.jpg', url: 'https://www.dh.go.kr/dozzaebi/' },
+                    { time: '16:30', place: '망상해수욕장 카페거리', text: '오션뷰 카페 휴식 및 여유로운 바다 산책', image: 'images/mangsang.jpg', url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603399' }
                 ]
             },
             {
@@ -455,10 +462,10 @@
                 duration: '1박 2일 코스',
                 desc: '자이언트 슬라이드, 스카이 사이클부터 베틀바위 등산까지 익스트림한 도전을 즐기는 여행자 전용',
                 steps: [
-                    { time: '1일차 10:00', place: '도째비골 스카이밸리', text: '스카이사이클 & 자이언트 슬라이드 탑승', image: 'images/dojjaebi.jpg' },
-                    { time: '1일차 13:00', place: '망상 해변 서핑', text: '동해 파도를 즐기는 낭만 서핑 레슨', image: 'images/surfing.jpg' },
-                    { time: '2일차 09:00', place: '무릉계곡 베틀바위', text: '한국의 장가계라 불리는 비경 등산', image: 'images/mureung.jpg' },
-                    { time: '2일차 14:00', place: '천곡동굴', text: '도심 속 신비로운 쾌적 동굴 탐험', image: 'images/cheongok.jpg' }
+                    { time: '1일차 10:00', place: '도째비골 스카이밸리', text: '스카이사이클 & 자이언트 슬라이드 탑승', image: 'images/dojjaebi.jpg', url: 'https://www.dh.go.kr/dozzaebi/' },
+                    { time: '1일차 13:00', place: '망상 해변 서핑', text: '동해 파도를 즐기는 낭만 서핑 레슨', image: 'images/surfing.jpg', url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603399' },
+                    { time: '2일차 09:00', place: '무릉계곡 베틀바위', text: '한국의 장가계라 불리는 비경 등산', image: 'images/mureung.jpg', url: 'https://www.dh.go.kr/mureung/' },
+                    { time: '2일차 14:00', place: '천곡동굴', text: '도심 속 신비로운 쾌적 동굴 탐험', image: 'images/cheongok.jpg', url: 'https://www.dh.go.kr/cave/' }
                 ]
             },
             {
@@ -468,15 +475,15 @@
                 duration: '1박 2일 코스',
                 desc: '숲속 계곡의 맑은 공기와 해변 캠핑의 감성을 제대로 느낄 수 있는 정통 힐링 휴가지 코스',
                 steps: [
-                    { time: '1일차 11:00', place: '무릉계곡 & 무릉반석', text: '맑은 계곡물에 발 담그기 & 숲 산책', image: 'images/mureung.jpg' },
-                    { time: '1일차 16:00', place: '망상 오토캠핑리조트', text: '송림 속 바비큐 party & 숙박', image: 'images/camping.jpg' },
-                    { time: '2일차 06:30', place: '추암 촛대바위', text: '새해 느낌 물씬 풍기는 아침 일출', image: 'images/chuam.jpg' },
-                    { time: '2일차 11:00', place: '한섬감성길', text: '해안 산책로 걷기 & 동해 곰치국 맛집', image: 'images/nongoldam.jpg' }
+                    { time: '1일차 11:00', place: '무릉계곡 & 무릉반석', text: '맑은 계곡물에 발 담그기 & 숲 산책', image: 'images/mureung.jpg', url: 'https://www.dh.go.kr/mureung/' },
+                    { time: '1일차 16:00', place: '망상 오토캠핑리조트', text: '송림 속 바비큐 party & 숙박', image: 'images/camping.jpg', url: 'https://www.campingkorea.or.kr/' },
+                    { time: '2일차 06:30', place: '추암 촛대바위', text: '새해 느낌 물씬 풍기는 아침 일출', image: 'images/chuam.jpg', url: 'https://www.dh.go.kr/tour/sub.htm?nav_code=tou1474603365' },
+                    { time: '2일차 11:00', place: '한섬감성길', text: '해안 산책로 걷기 & 동해 곰치국 맛집', image: 'images/nongoldam.jpg', url: 'https://www.dh.go.kr/tour/' }
                 ]
             }
         ];
 
-        // Data Store: 맛집 디렉토리
+        // Data Store: 맛집 디렉토리 (각 맛집 이미지 클릭 시 연결될 URL 포함)
         const foodData = [
             {
                 name: '진가네회포차',
@@ -484,9 +491,21 @@
                 categoryText: '🐟 싱싱 해산물',
                 rating: 4.9,
                 image: 'images/seafood.jpg',
+                url: 'https://map.naver.com/p/search/동해%20진가네회포차',
                 desc: '묵호항 부근 위치! 신선함이 남다른 자연산 모둠회와 얼큰한 매운탕이 일품인 대표 포차.',
                 tag: '#묵호맛집 #진가네회포차 #모둠회 #해물파전',
                 price: '35,000원대~'
+            },
+            {
+                name: '사토우',
+                category: 'izakaya',
+                categoryText: '🍶 이자카야',
+                rating: 4.9,
+                image: 'images/satou.jpg',
+                url: 'https://map.naver.com/p/search/동해%20사토우',
+                desc: '동해 현지인과 여행객 모두에게 사랑받는 감성 이자카야 사토우입니다.',
+                tag: '#동해맛집 #사토우 #동해이자카야 #분위기맛집',
+                price: '15,000원대~'
             },
             {
                 name: '동해 칠보곰치국',
@@ -494,19 +513,10 @@
                 categoryText: '🍲 국물/곰치국',
                 rating: 4.8,
                 image: 'images/gomchi.jpg',
+                url: 'https://map.naver.com/p/search/동해%20칠보곰치국',
                 desc: '동해 현지인들이 적극 추천하는 얼큰하고 시원한 곰치국 전문점입니다.',
                 tag: '#묵호항맛집 #곰치국 #해장전문',
                 price: '18,000원대'
-            },
-            {
-                name: '묵호 어시장 횟집 타운',
-                category: 'seafood',
-                categoryText: '🐟 싱싱 해산물',
-                rating: 4.9,
-                image: 'images/seafood.jpg',
-                desc: '갓 잡아 올린 싱싱한 제철 횟감과 대게를 가성비 좋게 맛볼 수 있습니다.',
-                tag: '#자연산회 #대게 #싱싱어시장',
-                price: '변동 (시가)'
             },
             {
                 name: '논골 카페 & 묵호 뷰',
@@ -514,6 +524,7 @@
                 categoryText: '☕ 오션뷰 카페',
                 rating: 4.7,
                 image: 'images/cafe-nongol.jpg',
+                url: 'https://map.naver.com/p/search/동해%20논골담길%20카페',
                 desc: '언덕 위 묵호 바다 전망을 보며 시그니처 감성 라떼를 즐기는 힐링 공간.',
                 tag: '#논골담길 #파노라마뷰 #인생샷',
                 price: '6,000원대'
@@ -524,19 +535,10 @@
                 categoryText: '☕ 오션뷰 카페',
                 rating: 4.6,
                 image: 'images/cafe-mangsang.jpg',
+                url: 'https://map.naver.com/p/search/동해%20망상해수욕장%20카페',
                 desc: '망상 해변 바로 앞에 위치하여 파도 소리와 수제 베이커리를 즐기는 브런치 카페.',
                 tag: '#망상해변 #수제베이커리 #디저트',
                 price: '7,000원대'
-            },
-            {
-                name: '추암 촛대바위 생선구이집',
-                category: 'seafood',
-                categoryText: '🐟 싱싱 해산물',
-                rating: 4.8,
-                image: 'images/grilled-fish.jpg',
-                desc: '숯불 향이 가득 입혀진 짭조름한 듬뿍 생선구이 모듬 한 상 차림.',
-                tag: '#추암맛집 #생선구이정식 #가족식사',
-                price: '15,000원대'
             },
             {
                 name: '무릉 산채비빔밥 식당가',
@@ -544,39 +546,46 @@
                 categoryText: '🍲 힐링/한식',
                 rating: 4.7,
                 image: 'images/bibimbap.jpg',
+                url: 'https://map.naver.com/p/search/동해%20무릉계곡%20산채비빔밥',
                 desc: '무릉계곡 입구에서 맛보는 청정 산나물과 감자전, 시원한 막걸리 한잔!',
                 tag: '#무릉계곡 #산채비빔밥 #감자전',
                 price: '12,000원대'
             }
         ];
 
-        // Dynamic Render: 6대 핵심 관광명소
+        // Dynamic Render: 6대 핵심 관광명소 (사진 클릭 시 공식 홈페이지 새 창 열기)
         function renderAttractions() {
             const container = document.getElementById('attractions-container');
             container.innerHTML = attractionsData.map(item => `
                 <div class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
                     <div>
-                        <div class="relative h-56 overflow-hidden">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.name} 공식 홈페이지 바로가기" class="block relative h-56 overflow-hidden cursor-pointer">
                             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             <span class="absolute top-4 left-4 bg-slate-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full font-medium">${item.category}</span>
-                        </div>
+                            <span class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] px-2.5 py-1 rounded-full font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shadow">
+                                홈페이지 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </span>
+                        </a>
                         <div class="p-6">
                             <span class="text-xs font-semibold text-brand-sky block mb-1">${item.tag}</span>
                             <h3 class="text-xl font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-2">${item.name}</h3>
                             <p class="text-slate-600 text-sm leading-relaxed line-clamp-2">${item.desc}</p>
                         </div>
                     </div>
-                    <div class="px-6 pb-6 pt-0">
-                        <button onclick="openAttractionModal('${item.id}')" class="w-full py-3 rounded-xl bg-slate-100 hover:bg-brand-blue hover:text-white text-slate-700 text-sm font-semibold transition-all flex items-center justify-center gap-2">
-                            <span>자세히 보기</span>
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <div class="px-6 pb-6 pt-0 flex gap-2">
+                        <button onclick="openAttractionModal('${item.id}')" class="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold transition-all">
+                            상세 정보
                         </button>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 rounded-xl bg-brand-blue hover:bg-brand-sky text-white text-sm font-semibold transition-all flex items-center justify-center gap-1.5">
+                            <span>홈페이지</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Dynamic Render: 여행 코스
+        // Dynamic Render: 여행 코스 (스텝 사진 클릭 시 관련 홈페이지 새 창 열기)
         function renderCourses(filter = 'all') {
             const container = document.getElementById('courses-container');
             const filtered = filter === 'all' ? coursesData : coursesData.filter(c => c.type === filter);
@@ -596,7 +605,7 @@
                         <h3 class="text-xl font-bold text-slate-900 mb-2">${course.title}</h3>
                         <p class="text-slate-600 text-xs sm:text-sm mb-6 leading-relaxed">${course.desc}</p>
                         
-                        <!-- Timeline with Images -->
+                        <!-- Timeline with Clickable Images -->
                         <div class="relative pl-6 space-y-6 border-l-2 border-brand-sky/30 my-6">
                             ${course.steps.map(s => `
                                 <div class="relative group">
@@ -604,9 +613,12 @@
                                     <div class="text-xs text-brand-blue font-bold mb-0.5">${s.time}</div>
                                     <div class="text-sm font-semibold text-slate-800 mb-1">${s.place}</div>
                                     <div class="text-xs text-slate-500 font-light mb-2.5">${s.text}</div>
-                                    <div class="w-full h-28 sm:h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                                    <a href="${s.url}" target="_blank" rel="noopener noreferrer" title="${s.place} 바로가기" class="block relative w-full h-28 sm:h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer">
                                         <img src="${s.image}" alt="${s.place}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
-                                    </div>
+                                        <span class="absolute bottom-2 right-2 bg-slate-900/75 text-white text-[10px] px-2 py-0.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+                                            사이트 이동 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                        </span>
+                                    </a>
                                 </div>
                             `).join('')}
                         </div>
@@ -629,7 +641,7 @@
             renderCourses(type);
         }
 
-        // Dynamic Render: 맛집 디렉토리
+        // Dynamic Render: 맛집 디렉토리 (사진 클릭 시 관련 페이지 새 창 열기)
         let currentFoodCategory = 'all';
         function renderFood() {
             const container = document.getElementById('food-container');
@@ -647,16 +659,21 @@
             }
 
             container.innerHTML = filtered.map(item => `
-                <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all">
-                    <div class="relative h-44 overflow-hidden">
-                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all group">
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.name} 상세 페이지 바로가기" class="block relative h-44 overflow-hidden cursor-pointer">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-amber-500 flex items-center gap-1">
                             <i class="fa-solid fa-star text-xs"></i> ${item.rating}
                         </span>
-                    </div>
+                        <span class="absolute bottom-2.5 left-2.5 bg-slate-900/75 text-white text-[11px] px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                            정보 보기 <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                        </span>
+                    </a>
                     <div class="p-5">
                         <div class="text-[11px] font-medium text-slate-400 mb-1">${item.categoryText}</div>
-                        <h4 class="text-base font-bold text-slate-900 mb-1">${item.name}</h4>
+                        <h4 class="text-base font-bold text-slate-900 mb-1">
+                            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition-colors">${item.name}</a>
+                        </h4>
                         <p class="text-xs text-slate-500 mb-3 line-clamp-2">${item.desc}</p>
                         <div class="text-xs font-medium text-brand-sky mb-3">${item.tag}</div>
                         <div class="flex items-center justify-between border-t border-slate-100 pt-3">
@@ -839,7 +856,7 @@
 
             const modalContent = document.getElementById('modal-content');
             modalContent.innerHTML = `
-                <div class="relative h-64 sm:h-80">
+                <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="block relative h-64 sm:h-80 group">
                     <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent flex items-end p-6 sm:p-8">
                         <div>
@@ -847,7 +864,7 @@
                             <h3 class="text-2xl sm:text-3xl font-extrabold text-white">${item.name}</h3>
                         </div>
                     </div>
-                </div>
+                </a>
                 <div class="p-6 sm:p-8 space-y-6">
                     <div>
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">상세 소개</h4>
@@ -872,8 +889,12 @@
                         </div>
                     </div>
 
-                    <div class="pt-2">
-                        <button onclick="closeAttractionModal(); showToast('${item.name} 안내 정보가 복사되었습니다.')" class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-brand-blue transition-colors">
+                    <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="flex-1 py-3.5 rounded-xl bg-brand-blue text-white font-bold text-sm hover:bg-brand-sky transition-colors text-center flex items-center justify-center gap-2">
+                            <span>공식 홈페이지 방문하기</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                        <button onclick="closeAttractionModal(); showToast('${item.name} 안내 정보가 복사되었습니다.')" class="flex-1 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-colors">
                             여행 일정에 추가하기
                         </button>
                     </div>
@@ -885,10 +906,6 @@
 
         function closeAttractionModal() {
             document.getElementById('attraction-modal').classList.add('hidden');
-        }
-
-        function openGuideModal() {
-            showToast('동해시 관광 가이드북(PDF) 다운로드가 시작됩니다.');
         }
 
         // Toast Helper
