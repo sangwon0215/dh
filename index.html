@@ -71,7 +71,7 @@
             </a>
 
             <!-- Desktop Nav Menu -->
-            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+            <nav class="hidden lg:flex items-center gap-7 font-medium text-slate-600 text-sm">
                 <a href="#attractions" class="hover:text-brand-blue transition-colors">6대 명소</a>
                 <a href="#courses" class="hover:text-brand-blue transition-colors">추천 코스</a>
                 <a href="#food" class="hover:text-brand-blue transition-colors">맛집 디렉토리</a>
@@ -80,11 +80,16 @@
                 </a>
             </nav>
 
-            <!-- Actions Header -->
-            <div class="hidden md:flex items-center gap-3">
-                <button onclick="scrollToQuiz()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky text-white text-sm font-medium shadow-md shadow-brand-sky/20 hover:shadow-lg hover:shadow-brand-sky/30 hover:-translate-y-0.5 transition-all">
+            <!-- Actions Header (Desktop) -->
+            <div class="hidden md:flex items-center gap-2.5">
+                <button onclick="scrollToQuiz()" class="px-4 py-2 rounded-full bg-gradient-to-r from-brand-blue to-brand-sky text-white text-sm font-medium shadow-md shadow-brand-sky/20 hover:shadow-lg hover:shadow-brand-sky/30 hover:-translate-y-0.5 transition-all">
                     맞춤 여행 찾기
                 </button>
+                <div class="h-5 w-px bg-slate-200 mx-1"></div>
+                <!-- Auth Buttons Container (Desktop) -->
+                <div id="desktop-auth-area" class="flex items-center gap-2">
+                    <!-- Injected by JS -->
+                </div>
             </div>
 
             <!-- Mobile Menu Toggle Button -->
@@ -102,6 +107,10 @@
             <button onclick="scrollToQuiz(); closeMobileMenu();" class="w-full mt-2 py-3 rounded-xl bg-brand-blue text-white font-medium shadow-md text-center">
                 나만의 동해 여행 만들기
             </button>
+            <!-- Auth Buttons Container (Mobile) -->
+            <div id="mobile-auth-area" class="pt-3 border-t border-slate-100 flex flex-col gap-2">
+                <!-- Injected by JS -->
+            </div>
         </div>
     </header>
 
@@ -349,6 +358,121 @@
         </div>
     </div>
 
+    <!-- Auth Modal (Login & Sign Up) -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-800 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header & Tabs -->
+            <div class="p-6 sm:p-8 pb-0">
+                <div class="flex items-center gap-2.5 mb-5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-blue to-brand-sky flex items-center justify-center text-white shadow">
+                        <i class="fa-solid fa-water text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900 leading-tight">동해투어 회원 서비스</h3>
+                        <p class="text-xs text-slate-400">나만의 동해 여행 코스를 저장하고 관리하세요</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 bg-slate-100 p-1 rounded-xl">
+                    <button id="tab-login" onclick="switchAuthTab('login')" class="py-2.5 rounded-lg text-sm font-bold bg-white text-brand-blue shadow-sm transition-all">
+                        로그인
+                    </button>
+                    <button id="tab-signup" onclick="switchAuthTab('signup')" class="py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-800 transition-all">
+                        회원가입
+                    </button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" onsubmit="handleLogin(event)" class="p-6 sm:p-8 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">이메일 주소</label>
+                    <div class="relative">
+                        <input type="email" id="login-email" required placeholder="example@donghae.kr" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-regular fa-envelope absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">비밀번호</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" required placeholder="비밀번호를 입력하세요" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <p id="login-error" class="hidden text-xs text-rose-500 font-medium"></p>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-bold text-sm shadow-lg shadow-brand-sky/25 hover:opacity-95 transition-all">
+                    로그인하기
+                </button>
+                <p class="text-center text-xs text-slate-500 pt-1">
+                    아직 회원이 아니신가요? 
+                    <button type="button" onclick="switchAuthTab('signup')" class="text-brand-blue font-bold hover:underline">회원가입</button>
+                </p>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" onsubmit="handleSignup(event)" class="hidden p-6 sm:p-8 space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">이름 (닉네임)</label>
+                    <div class="relative">
+                        <input type="text" id="signup-name" required placeholder="홍길동" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-regular fa-user absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">이메일 주소</label>
+                    <div class="relative">
+                        <input type="email" id="signup-email" required placeholder="example@donghae.kr" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-regular fa-envelope absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">비밀번호 (4자 이상)</label>
+                    <div class="relative">
+                        <input type="password" id="signup-password" required minlength="4" placeholder="비밀번호 입력" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">비밀번호 확인</label>
+                    <div class="relative">
+                        <input type="password" id="signup-password-confirm" required minlength="4" placeholder="비밀번호 재입력" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-sky">
+                        <i class="fa-solid fa-check-double absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+                <p id="signup-error" class="hidden text-xs text-rose-500 font-medium"></p>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-bold text-sm shadow-lg shadow-brand-sky/25 hover:opacity-95 transition-all mt-1">
+                    가입 완료하기
+                </button>
+                <p class="text-center text-xs text-slate-500 pt-1">
+                    이미 계정이 있으신가요? 
+                    <button type="button" onclick="switchAuthTab('login')" class="text-brand-blue font-bold hover:underline">로그인</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Saved Trips Modal (My Page) -->
+    <div id="saved-trips-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl relative max-h-[85vh] flex flex-col">
+            <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold text-brand-sky uppercase tracking-wider">My Travel List</span>
+                    <h3 id="saved-trips-title" class="text-xl font-extrabold text-slate-900">저장한 동해 여행 일정</h3>
+                </div>
+                <button onclick="closeSavedTripsModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="saved-trips-list" class="p-6 overflow-y-auto custom-scrollbar space-y-3">
+                <!-- Dynamic saved trips -->
+            </div>
+        </div>
+    </div>
+
     <!-- Generic Toast Message -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300 transform translate-y-4">
         <i class="fa-solid fa-circle-check text-brand-sky text-lg"></i>
@@ -357,7 +481,240 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // ==========================================
+        // Authentication & Saved Trips System
+        // ==========================================
+        const USERS_KEY = 'donghae_tour_users';
+        const CURRENT_USER_KEY = 'donghae_tour_current_user';
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem(CURRENT_USER_KEY) || 'null');
+        }
+
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+            } else {
+                localStorage.removeItem(CURRENT_USER_KEY);
+            }
+            updateAuthUI();
+        }
+
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            const desktopArea = document.getElementById('desktop-auth-area');
+            const mobileArea = document.getElementById('mobile-auth-area');
+
+            if (user) {
+                const savedCount = (user.savedTrips || []).length;
+                desktopArea.innerHTML = `
+                    <button onclick="openSavedTripsModal()" class="px-3.5 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-bookmark text-brand-blue"></i>
+                        <span>내 일정 (${savedCount})</span>
+                    </button>
+                    <span class="text-xs font-bold text-slate-800 px-1">${user.name}님</span>
+                    <button onclick="handleLogout()" class="px-3.5 py-2 rounded-full border border-slate-200 hover:bg-slate-100 text-slate-500 text-xs font-semibold transition-colors">
+                        로그아웃
+                    </button>
+                `;
+                mobileArea.innerHTML = `
+                    <div class="flex items-center justify-between px-2 py-1">
+                        <span class="text-sm font-bold text-slate-800"><i class="fa-solid fa-circle-user text-brand-blue me-1.5"></i>${user.name}님 환영합니다</span>
+                        <button onclick="handleLogout(); closeMobileMenu();" class="text-xs text-slate-500 underline">로그아웃</button>
+                    </div>
+                    <button onclick="openSavedTripsModal(); closeMobileMenu();" class="w-full py-2.5 rounded-xl bg-slate-100 text-slate-800 font-semibold text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bookmark text-brand-blue"></i> 저장한 내 일정 보기 (${savedCount})
+                    </button>
+                `;
+            } else {
+                desktopArea.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="px-4 py-2 rounded-full text-slate-700 hover:text-brand-blue hover:bg-slate-100 text-sm font-semibold transition-colors">
+                        로그인
+                    </button>
+                    <button onclick="openAuthModal('signup')" class="px-4 py-2 rounded-full border border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white text-sm font-semibold transition-colors">
+                        회원가입
+                    </button>
+                `;
+                mobileArea.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="openAuthModal('login'); closeMobileMenu();" class="py-2.5 rounded-xl bg-slate-100 text-slate-800 font-semibold text-sm">
+                            로그인
+                        </button>
+                        <button onclick="openAuthModal('signup'); closeMobileMenu();" class="py-2.5 rounded-xl border border-brand-blue text-brand-blue font-semibold text-sm">
+                            회원가입
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function openAuthModal(tab = 'login') {
+            switchAuthTab(tab);
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('signup-error').classList.add('hidden');
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            if (tab === 'login') {
+                tabLogin.className = 'py-2.5 rounded-lg text-sm font-bold bg-white text-brand-blue shadow-sm transition-all';
+                tabSignup.className = 'py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-800 transition-all';
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+            } else {
+                tabSignup.className = 'py-2.5 rounded-lg text-sm font-bold bg-white text-brand-blue shadow-sm transition-all';
+                tabLogin.className = 'py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-800 transition-all';
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-password-confirm').value;
+            const errorEl = document.getElementById('signup-error');
+
+            if (password !== confirm) {
+                errorEl.innerText = '비밀번호가 일치하지 않습니다.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            const users = getUsers();
+            if (users.some(u => u.email === email)) {
+                errorEl.innerText = '이미 가입된 이메일 주소입니다.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            const newUser = { name, email, password, savedTrips: [] };
+            users.push(newUser);
+            saveUsers(users);
+            setCurrentUser(newUser);
+
+            e.target.reset();
+            closeAuthModal();
+            showToast(`${name}님, 회원가입을 환영합니다!`);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+
+            const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                errorEl.innerText = '이메일 또는 비밀번호가 올바르지 않습니다.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            setCurrentUser(user);
+            e.target.reset();
+            closeAuthModal();
+            showToast(`${user.name}님, 반갑습니다!`);
+        }
+
+        function handleLogout() {
+            setCurrentUser(null);
+            showToast('로그아웃되었습니다.');
+        }
+
+        function saveTripToUser(tripTitle) {
+            const user = getCurrentUser();
+            if (!user) {
+                showToast('로그인 후 일정을 저장할 수 있습니다.');
+                openAuthModal('login');
+                return;
+            }
+
+            const users = getUsers();
+            const targetUser = users.find(u => u.email === user.email);
+            if (!targetUser) return;
+
+            targetUser.savedTrips = targetUser.savedTrips || [];
+            if (!targetUser.savedTrips.some(t => t.title === tripTitle)) {
+                targetUser.savedTrips.push({
+                    title: tripTitle,
+                    date: new Date().toLocaleDateString('ko-KR')
+                });
+                saveUsers(users);
+                setCurrentUser(targetUser);
+                showToast(`'${tripTitle}' 일정이 내 계정에 저장되었습니다!`);
+            } else {
+                showToast('이미 저장된 일정입니다.');
+            }
+        }
+
+        function removeSavedTrip(index) {
+            const user = getCurrentUser();
+            if (!user) return;
+            const users = getUsers();
+            const targetUser = users.find(u => u.email === user.email);
+            if (!targetUser) return;
+
+            targetUser.savedTrips.splice(index, 1);
+            saveUsers(users);
+            setCurrentUser(targetUser);
+            openSavedTripsModal();
+            showToast('일정이 삭제되었습니다.');
+        }
+
+        function openSavedTripsModal() {
+            const user = getCurrentUser();
+            if (!user) return;
+            document.getElementById('saved-trips-title').innerText = `${user.name}님의 저장 일정`;
+            const listEl = document.getElementById('saved-trips-list');
+            const trips = user.savedTrips || [];
+
+            if (trips.length === 0) {
+                listEl.innerHTML = `<div class="text-center py-10 text-slate-400 text-sm">아직 저장된 여행 일정이 없습니다.<br>추천 코스나 퀴즈 결과를 저장해 보세요!</div>`;
+            } else {
+                listEl.innerHTML = trips.map((t, idx) => `
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div>
+                            <div class="text-sm font-bold text-slate-900">${t.title}</div>
+                            <div class="text-xs text-slate-400 mt-0.5">저장일: ${t.date}</div>
+                        </div>
+                        <button onclick="removeSavedTrip(${idx})" class="text-xs text-rose-500 hover:bg-rose-50 px-3 py-1.5 rounded-lg font-semibold transition-colors">
+                            삭제
+                        </button>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('saved-trips-modal').classList.remove('hidden');
+        }
+
+        function closeSavedTripsModal() {
+            document.getElementById('saved-trips-modal').classList.add('hidden');
+        }
+
+        // ==========================================
         // Data Store: 6대 핵심 관광명소 (각 명소 공식 홈페이지 URL 포함)
+        // ==========================================
         const attractionsData = [
             {
                 id: 'chuam',
@@ -634,7 +991,7 @@
                             `).join('')}
                         </div>
                     </div>
-                    <button onclick="showToast('${course.title} 일정이 내 여행 리스트에 저장되었습니다!')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-900 hover:text-white text-sm font-semibold transition-all shadow-xs">
+                    <button onclick="saveTripToUser('${course.title}')" class="w-full py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-900 hover:text-white text-sm font-semibold transition-all shadow-xs">
                         이 코스 선택하기
                     </button>
                 </div>
@@ -748,7 +1105,6 @@
             const quizStepText = document.getElementById('quiz-step-text');
 
             if (quizStep < quizQuestions.length) {
-                // Update Progress Bar
                 const percent = ((quizStep + 1) / quizQuestions.length) * 100;
                 quizProgress.style.width = `${percent}%`;
                 quizStepText.innerText = `${quizStep + 1} / ${quizQuestions.length} 단계`;
@@ -758,7 +1114,7 @@
                 quizBody.innerHTML = `
                     <h3 class="text-xl sm:text-2xl font-bold text-white mb-6 leading-snug">${currentQ.q}</h3>
                     <div class="space-y-3">
-                        ${currentQ.options.map((opt, idx) => `
+                        ${currentQ.options.map((opt) => `
                             <button onclick="answerQuiz('${opt.type}')" class="w-full text-left p-4 sm:p-5 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-brand-sky text-white text-sm sm:text-base font-medium transition-all flex items-center justify-between group">
                                 <span>${opt.label}</span>
                                 <i class="fa-solid fa-chevron-right text-xs opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
@@ -767,7 +1123,6 @@
                     </div>
                 `;
             } else {
-                // Quiz Finish -> Render Recommended Plan
                 showQuizResult();
             }
         }
@@ -786,7 +1141,6 @@
             quizProgress.style.width = `100%`;
             quizStepText.innerText = `분석 완료!`;
 
-            // Simple Logic for Quiz Match Result
             const counts = { nature: 0, activity: 0, photo: 0 };
             quizAnswers.forEach(a => counts[a] = (counts[a] || 0) + 1);
             let resultType = 'nature';
@@ -842,7 +1196,7 @@
                         <button onclick="resetQuiz()" class="w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-all">
                             퀴즈 다시 하기
                         </button>
-                        <button onclick="showToast('${resultData.title} 코스가 저장되었습니다!')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-bold text-sm shadow-lg transition-all">
+                        <button onclick="saveTripToUser('${resultData.title}')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-blue to-brand-sky text-white font-bold text-sm shadow-lg transition-all">
                             내 일정으로 저장
                         </button>
                     </div>
@@ -905,7 +1259,7 @@
                             <span>공식 홈페이지 방문하기</span>
                             <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                         </a>
-                        <button onclick="closeAttractionModal(); showToast('${item.name} 안내 정보가 복사되었습니다.')" class="flex-1 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-colors">
+                        <button onclick="closeAttractionModal(); saveTripToUser('${item.name} 방문 일정')" class="flex-1 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-colors">
                             여행 일정에 추가하기
                         </button>
                     </div>
@@ -953,6 +1307,7 @@
 
         // Initialize App
         window.onload = function() {
+            updateAuthUI();
             renderAttractions();
             renderCourses();
             renderFood();
